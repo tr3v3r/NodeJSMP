@@ -1,0 +1,24 @@
+{
+  "name": "nodemp",
+  "version": "0.0.1",
+  "description": "Node JS Mentoring Program Hometask",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon --exec  node --require babel-register app.js",
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tr3v3r/NodeMP.git"
+  },
+  "author": "Aliaksei Astafyeu (aliakseiastafyeu@gmail.com)",
+  "license": "ISC",
+  "homepage": "https://github.com/tr3v3r/NodeMP#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "nodemon": "^1.17.3"
+  }
+}
