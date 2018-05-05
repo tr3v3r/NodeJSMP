@@ -12,7 +12,7 @@ export default class Importer {
 
   onChangeImportSync() {
     this.watcher.on('changed', (path) => {
-      console.log(`file at at path ${path} was updated:`);
+      console.log(`file at path ${path} was updated:`);
       console.log(this.importSync(path));
     });
   }
@@ -20,7 +20,7 @@ export default class Importer {
   onChangeImportAsync() {
     this.watcher.on('changed', (path) => {
       this.import(path).then((data) => {
-        console.log(`file at at path ${path} was updated:`);
+        console.log(`file at path ${path} was updated:`);
         console.log(data);
       });
     });
