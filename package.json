@@ -4,7 +4,8 @@
   "description": "Node JS Mentoring Program Hometask",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon --exec  node --require babel-register app.js",
+    "start": "node --require babel-register app.js",
+    "watch": "nodemon --exec node --require babel-register app.js",
     "test": ""
   },
   "repository": {
@@ -19,6 +20,13 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.26.0",
-    "nodemon": "^1.17.3"
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "install": "^0.11.0",
+    "nodemon": "^1.17.3",
+    "npm": "^6.0.0"
+  },
+  "dependencies": {
+    "csvjson": "^5.0.0"
   }
 }
