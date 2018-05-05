@@ -5,7 +5,6 @@ export default class DirWatcher extends EventEmitter {
   constructor() {
     super();
     this.pathsStorage = {};
-    this.filesInFolder = [];
     this.watchFileStats = this.watchFileStats.bind(this);
   }
 
@@ -15,20 +14,21 @@ export default class DirWatcher extends EventEmitter {
   }
 
   addOrRemoveFileDetection(files, path) {
-    if (this.filesInFolder.length > files.length) {
-      this.filesInFolder.forEach((fileName) => {
+    const filesInFolder = this.pathsStorage[path] || [];
+    if (filesInFolder.length > files.length) {
+      filesInFolder.forEach((fileName) => {
         if (!files.includes(fileName)) {
           console.log(`file ${fileName} was removed from folder ${path}`);
         }
       });
-    } else if (this.filesInFolder.length < files.length) {
+    } else if (filesInFolder.length < files.length) {
       files.forEach((fileName) => {
-        if (!this.filesInFolder.includes(fileName)) {
+        if (!filesInFolder.includes(fileName)) {
           console.log(`file ${fileName} was added to folder ${path}`);
         }
       });
     }
-    this.filesInFolder = files;
+    this.pathsStorage[path] = files;
   }
 
   watchFileStats(path) {
