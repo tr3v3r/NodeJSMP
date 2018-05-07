@@ -11,17 +11,24 @@ export default class Importer {
   }
 
   onChangeImportSync() {
-    this.watcher.on('changed', (path) => {
+    this.watcher.on('changed', (path) => {      
+      const csvData = this.importSync(path);
+      const jsonData = csvjson.toObject(csvData);
       console.log(`file at path ${path} was updated:`);
-      console.log(this.importSync(path));
+      console.log(csvData);
     });
   }
 
   onChangeImportAsync() {
     this.watcher.on('changed', (path) => {
-      this.import(path).then((data) => {
+      this.import(path)
+      .then(csvData => csvjson.toObject(csvData))
+      .then(json => {
         console.log(`file at path ${path} was updated:`);
-        console.log(data);
+        console.log(json);
+      })
+      .catch(error => {
+        console.log(error.message);
       });
     });
   }
@@ -29,14 +36,14 @@ export default class Importer {
   import(path) {
     return new Promise((resolve, reject) => {
       fs.readFile(path, { encoding: 'utf8' }, (error, data) => {
-        if (error) reject(error);
-        else resolve(csvjson.toObject(data));
+        if(error) reject(error);
+        resolve(data);
       });
     });
   }
 
   importSync(path) {
     const csv = fs.readFileSync(path, { encoding: 'utf8' });
-    return csvjson.toObject(csv);
+    return csv;
   }
 }

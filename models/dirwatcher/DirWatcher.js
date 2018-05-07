@@ -16,17 +16,9 @@ export default class DirWatcher extends EventEmitter {
   addOrRemoveFileDetection(files, path) {
     const filesInFolder = this.pathsStorage[path] || [];
     if (filesInFolder.length > files.length) {
-      filesInFolder.forEach((fileName) => {
-        if (!files.includes(fileName)) {
-          console.log(`file ${fileName} was removed from folder ${path}`);
-        }
-      });
+      this.logIfNotIncules(files, filesInFolder, path, 'remove from');     
     } else if (filesInFolder.length < files.length) {
-      files.forEach((fileName) => {
-        if (!filesInFolder.includes(fileName)) {
-          console.log(`file ${fileName} was added to folder ${path}`);
-        }
-      });
+      this.logIfNotIncules(filesInFolder, files, path, 'added to');     
     }
     this.pathsStorage[path] = files;
   }
@@ -34,19 +26,37 @@ export default class DirWatcher extends EventEmitter {
   watchFileStats(path) {
     fs.stat(path, (err, stats) => {
       if (err) {
-        console.log(`stop watching: ${err.message}`);
-        clearInterval(this.interval);
+        this.handleWatchingError(err);
         return;
       }
-      if (stats.isDirectory()) {
-        const files = fs.readdirSync(path);
-        files.forEach(fileName => this.watchFileStats(`${path}/${fileName}`));
-        this.addOrRemoveFileDetection(files, path);
-      } else if (stats.isFile()) {
-        const ctimeMS = +new Date(stats.ctime);
-        if (this.pathsStorage[path] !== ctimeMS) this.emit('changed', path);
-        this.pathsStorage[path] = ctimeMS;
+      if (stats.isDirectory()) this.watchFilesInDirectory(path);
+      else if (stats.isFile()) this.watchFile(path, stats.ctime);
+    });
+  }
+
+  logIfNotIncules(nextFiles, files, path, messagePrep) {
+    files.forEach((fileName) => {
+      if (!nextFiles.includes(fileName)) {
+        console.log(`file ${fileName} was ${messagePrep} folder ${path}`);
       }
     });
   }
+
+  watchFilesInDirectory(path) {
+    const files = fs.readdirSync(path);
+    files.forEach(fileName => this.watchFileStats(`${path}/${fileName}`));
+    this.addOrRemoveFileDetection(files, path);
+  }
+
+  watchFile(path, ctime) {
+    const ctimeMS = +new Date(ctime);
+    if (this.pathsStorage[path] !== ctimeMS) this.emit('changed', path);
+    this.pathsStorage[path] = ctimeMS;
+  }
+
+  handleWatchingError(err) {
+    console.log(`stop watching: ${err.message}`);
+    clearInterval(this.interval);
+  }
+
 }
