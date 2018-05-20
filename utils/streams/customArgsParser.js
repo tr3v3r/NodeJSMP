@@ -6,12 +6,23 @@ class Arg {
   }
 }
 
-class CustomArgsParser {
+export default class CustomArgsParser {
   constructor() {
     this.args = {};
     this.prevParentArgKey = null;
     this.listeners = {};
     this.events = [];
+    this.init();
+  }
+
+  init() {
+    this.register('--help, -h', 'help', 'Shows the list of all available commands.')
+      .on('help', () => {
+        if (this.firstEvent === 'help') {
+          console.table(this.args, ['description']);
+          throw new Error('help action was invoke. Other options was ignored.');
+        }
+      });
   }
 
   register(options, eventName, description) {
@@ -54,6 +65,7 @@ class CustomArgsParser {
         if (key) {
           const { eventName, registeredKey } = this.checkIfRegistered(key, prevParentKey);
           if (eventName) {
+            if (!this.firstEvent) this.firstEvent = eventName;
             if (event.length) this.events.push(event);
             event = [eventName];
             prevParentKey = registeredKey;
@@ -81,7 +93,7 @@ class CustomArgsParser {
   }
 
   triggerEvents() {
-    this.events.forEach(([eventName, ...callbackArgs] = []) => {
+    this.events.forEach(([eventName, ...callbackArgs] = [], index) => {
       const listeners = this.listeners[eventName];
       if (Array.isArray(listeners)) {
         listeners.forEach(callback => callback(...callbackArgs));
@@ -90,10 +102,3 @@ class CustomArgsParser {
   }
 }
 
-const myParser = new CustomArgsParser();
-
-myParser
-  .register('--action, -a', 'action', 'Invoke an action with given name')
-  .addChild('--file, -f', 'Pass an arguments for action')
-  .on('action', (...args) => console.log(args))
-  .parse(process.argv.slice(2));
