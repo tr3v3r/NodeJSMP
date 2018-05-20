@@ -44,7 +44,7 @@ export default class CustomArgsParser {
     if (typeof callback !== 'function') {
       throw new Error(`Expected callback to be function but recieved ${typeof callback}`);
     }
-    if (!this.events[eventName]) {
+    if (!this.listeners[eventName]) {
       this.listeners[eventName] = [callback];
     } else {
       this.listeners[eventName].push(callback);
@@ -54,6 +54,7 @@ export default class CustomArgsParser {
 
   parse(args) {
     try {
+      if (!args.length) this.triggerEvent(this.firstEvent = 'help');
       let event = [];
       let prevParentKey;
       args.forEach((arg) => {
@@ -93,12 +94,16 @@ export default class CustomArgsParser {
   }
 
   triggerEvents() {
-    this.events.forEach(([eventName, ...callbackArgs] = [], index) => {
-      const listeners = this.listeners[eventName];
-      if (Array.isArray(listeners)) {
-        listeners.forEach(callback => callback(...callbackArgs));
-      }
+    this.events.forEach(([eventName, ...callbackArgs] = []) => {
+      this.triggerEvent(eventName, ...callbackArgs);
     });
+  }
+
+  triggerEvent(eventName, ...args) {
+    const listeners = this.listeners[eventName];
+    if (Array.isArray(listeners)) {
+      listeners.forEach(callback => callback(...args));
+    }
   }
 }
 
