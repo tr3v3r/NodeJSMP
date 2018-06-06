@@ -10,6 +10,12 @@
         "no-console": 0,
         "no-unused-vars": 0,
         "class-methods-use-this": 0,
-        "comma-dangle": 0
+        "comma-dangle": 0,
+        "no-plusplus": 0,
+        "func-names": 0,
+        "no-underscore-dangle": 0,
+        "no-cond-assign": 0,
+        "no-use-before-define": 0
+        
     }    
 }
