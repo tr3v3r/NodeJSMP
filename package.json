@@ -4,8 +4,8 @@
   "description": "Node JS Mentoring Program Hometask",
   "main": "app.js",
   "scripts": {
-    "start": "node --require babel-register app.js",
-    "watch": "nodemon --exec node --require babel-register app.js",
+    "start": "node --require babel-register index.js",
+    "watch": "nodemon --exec node --require babel-register index.js",
     "test": ""
   },
   "repository": {
@@ -28,9 +28,10 @@
     "npm": "^6.1.0"
   },
   "dependencies": {
-    "cookie": "^0.3.1",    
+    "cookie": "^0.3.1",
     "csvjson": "^5.0.0",
     "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
     "through2": "^2.0.3"
   }
 }
