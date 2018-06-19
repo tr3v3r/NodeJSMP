@@ -19,5 +19,12 @@
 		"password": 555222333,
 		"isModerator": false,
 		"email": "Jhon@gmail.com"
+	},
+	{
+		"id": "3",
+		"name": "Aliaksei Astafyeu",
+		"password": 555222333,
+		"isModerator": false,
+		"email": "Jhon@gmail.com"
 	}
 ]
