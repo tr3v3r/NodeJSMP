@@ -1,7 +1,11 @@
 import http from 'http';
+import { PORT } from './constants';
 
 http
   .createServer()
+  .on('error', (err) => {
+    console.warn(`JSON-server error:${err.message}`);
+  })
   .on('request', (req, res) => {
     res.writeHead('200', {
       'Content-Type': 'application/json'
@@ -17,4 +21,4 @@ http
       ]
     }));
   })
-  .listen(3000);
+  .listen(PORT);
