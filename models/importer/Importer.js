@@ -11,7 +11,7 @@ export default class Importer {
   }
 
   onChangeImportSync() {
-    this.watcher.on('changed', (path) => {      
+    this.watcher.on('changed', (path) => {
       const csvData = this.importSync(path);
       const jsonData = csvjson.toObject(csvData);
       console.log(`file at path ${path} was updated:`);
@@ -22,21 +22,21 @@ export default class Importer {
   onChangeImportAsync() {
     this.watcher.on('changed', (path) => {
       this.import(path)
-      .then(csvData => csvjson.toObject(csvData))
-      .then(json => {
-        console.log(`file at path ${path} was updated:`);
-        console.log(json);
-      })
-      .catch(error => {
-        console.log(error.message);
-      });
+        .then(csvData => csvjson.toObject(csvData))
+        .then((json) => {
+          console.log(`file at path ${path} was updated:`);
+          console.log(json);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
     });
   }
 
   import(path) {
     return new Promise((resolve, reject) => {
       fs.readFile(path, { encoding: 'utf8' }, (error, data) => {
-        if(error) reject(error);
+        if (error) reject(error);
         resolve(data);
       });
     });
