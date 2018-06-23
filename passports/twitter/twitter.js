@@ -1,5 +1,6 @@
 import passport from 'passport';
 import TwitterStrategy from 'passport-twitter';
+import { find } from 'lodash';
 import { usersData } from '../../models/';
 import { ID, SECRET } from './constants';
 
@@ -9,10 +10,10 @@ export default function initTwitterPassport() {
     {
       consumerKey: ID,
       consumerSecret: SECRET,
-      callbackURL: 'http://localhost:8080/api/auth/twitter/callback'
+      callbackURL: 'http://localhost:8080/auth/twitter/callback'
     },
     (accessToken, refreshToken, profile, done) => {
-      const registeredUser = usersData.find(({ name }) => name === profile.name);
+      const registeredUser = find(usersData, { name: profile.name });
       if (!registeredUser) {
         return done(null, false, 'User with given data is not registered');
       }

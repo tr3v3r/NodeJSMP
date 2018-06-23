@@ -12,14 +12,9 @@
 // // myImporter.onChangeImportSync();
 // myImporter.onChangeImportAsync();
 import express from 'express';
-import { products, users, auth } from './routers';
-import { verify } from './middlewares';
+import router from './routers';
 
 const app = express();
-app
-  .use('/api', auth)
-  .use(verify)
-  .use('/api', products)
-  .use('/api', users);
+app.use('/', router);
 export default app;
 

@@ -9,7 +9,7 @@ export default function initGooglePassport() {
     {
       clientID: ID,
       clientSecret: SECRET,
-      callbackURL: 'http://localhost:8080/api/auth/google/callback'
+      callbackURL: 'http://localhost:8080/auth/google/callback'
     },
     (accessToken, refreshToken, profile, done) =>
     //   const registeredUser = usersData.find(({ name }) => name === profile.displayName);
