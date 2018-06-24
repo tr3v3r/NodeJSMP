@@ -16,7 +16,7 @@ router.use(cookieParser);
 router.use(session({ secret: 'SECRET', resave: false, saveUninitialized: true }));
 router.use(passport.initialize());
 router.use(passport.session());
-router.use('/api/', verify);
+// router.use('/api/', verify);
 
 initLocalPassport();
 initFacebookPassport();

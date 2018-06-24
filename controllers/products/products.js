@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { find, get } from 'lodash';
-import { productsData } from '../../models/';
+import { productsData } from '../../modelss/';
 
 const productsController = {
   productsGet(req, res) {

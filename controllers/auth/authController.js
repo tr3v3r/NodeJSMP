@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { find } from 'lodash';
-import { usersData } from '../../models';
+import { usersData } from '../../modelss';
 
 
 const authController = {
