@@ -11,7 +11,7 @@ module.exports = {
     reviews: {
       type: Sequelize.STRING
     },
-    productId: {
+    ProductId: {
       type: Sequelize.INTEGER
     },
     createdAt: {

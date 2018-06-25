@@ -1,29 +1,57 @@
-import fs from 'fs';
-import { find, get } from 'lodash';
-import { productsData } from '../../modelss/';
+import db from '../../models/';
 
 const productsController = {
   productsGet(req, res) {
-    res.json(productsData);
+    db.Product.findAll({ include: [{ model: db.Reviews }] })
+      .then((products) => {
+        res.json(products);
+      })
+      .catch((e) => {
+        console.log(e);
+        res.json({ error: 'No products available' });
+      });
   },
 
   productsPost(req, res) {
-    const newProduct = req.body;
-    const newProducts = JSON.stringify([...productsData, newProduct], null, '\t');
-    fs.writeFileSync('models/productsData/productsData.json', newProducts);
-    res.status(200).send(newProducts);
+    const { cost, name } = req.body;
+    db.Product.create({
+      name,
+      cost
+    })
+      .then(() => {
+        db.Product.findAll({ include: [{ model: db.Reviews }] })
+          .then((products) => {
+            res.status(200).send(products);
+          });
+      })
+      .catch(console.log);
   },
 
   id(req, res) {
-    const product = find(productsData, { id: req.params.id })
-    || { error: 'No products found by the given id' };
-    res.json(product);
+    db.Product.findOne({
+      where: { id: Number(req.params.id) },
+      include: [{ model: db.Reviews }]
+    })
+      .then((product) => {
+        res.json(product);
+      })
+      .catch((e) => {
+        console.log(e);
+        res.json({ error: 'No products found by the given id' });
+      });
   },
 
   reviews(req, res) {
-    const product = find(productsData, { id: req.params.id });
-    const review = get(product, 'reviews', { error: 'No reviews where found for provided id' });
-    res.json(review);
+    db.Reviews.findOne({
+      where: { ProductId: Number(req.params.id) }
+    })
+      .then((reviews) => {
+        res.json(reviews);
+      })
+      .catch((e) => {
+        console.log(e);
+        res.json({ error: 'No reviews found by the given id' });
+      });
   }
 };
 
