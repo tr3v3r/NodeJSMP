@@ -6,7 +6,7 @@ export default function verify(req, res, next) {
   if (token) {
     jwt.verify(token, 'secret', (err, decoded) => {
       if (err) {
-        res.json({ success: false, message: 'Failed to authenticate token' });
+        res.status(403).json({ success: false, message: 'Failed to authenticate token' });
       } else next();
     });
   } else {
