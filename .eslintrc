@@ -16,7 +16,7 @@
         "no-underscore-dangle": 0,
         "no-cond-assign": 0,
         "no-use-before-define": 0,
-        "object-curly-newline": 0
-        
+        "object-curly-newline": 0,
+        "import/prefer-default-export": 0        
     }    
 }
