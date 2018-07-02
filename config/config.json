@@ -1,3 +1,23 @@
 {
-    "name": "Node.js Homework Application"
+  "development": {
+    "username": "alexey",
+    "password": "supernodejspassword",
+    "database": "nodejsdb",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "alexey",
+    "password": "supernodejspassword",
+    "database": "nodejsdb",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "alexey",
+    "password": "supernodejspassword",
+    "database": "nodejsdb",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
 }
