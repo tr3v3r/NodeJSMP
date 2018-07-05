@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import passport from 'passport';
 
 
-import { productsController, users, authController } from '../controllers';
+import { productsController, users, authController, citiesController } from '../controllers';
 import { queryParser, cookieParser, verify } from '../middlewares';
 import { initLocalPassport, initFacebookPassport, initTwitterPassport, initGooglePassport } from '../passports';
 
@@ -41,6 +41,7 @@ router.get('/api/products', productsController.productsGet);
 router.get('/api/products/:id', productsController.id);
 router.get('/api/products/:id/reviews', productsController.reviews);
 router.get('/api/users', users);
+router.get('/api/city', citiesController.getRandomCity);
 
 
 export default router;

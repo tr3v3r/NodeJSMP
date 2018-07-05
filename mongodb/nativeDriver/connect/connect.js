@@ -9,8 +9,7 @@ export default function connect(callback = noop) {
       console.log('Connected successfully to server');
 
       const db = client.db(dbName);
-      callback(db, (result) => {
-        console.log(result);
+      callback(db, () => {
         client.close();
       });
     }
