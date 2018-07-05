@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 import { noop } from 'lodash';
-import { url, dbName } from '../constants';
+import { url, dbName } from '../../constants';
 
 export default function connect(callback = noop) {
   MongoClient.connect(url, (err, client) => {
