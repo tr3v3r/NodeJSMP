@@ -1,4 +1,4 @@
-import users from './users';
+import userContoller from './users';
 
-export default users;
+export default userContoller;
 

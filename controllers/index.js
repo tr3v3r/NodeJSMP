@@ -1,10 +1,11 @@
-import users from './users';
+import userContoller from './users';
 import productsController from './products';
 import authController from './auth';
 import citiesController from './cities';
 
+
 export {
-  users,
+  userContoller,
   productsController,
   authController,
   citiesController

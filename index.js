@@ -39,9 +39,9 @@ import { mongoose } from './mongodb';
 
 const port = process.env.PORT || 8080;
 
-mongoose.connect();
-
-app.listen(port, () => {
-  console.log(`App listening on port ${port}!`);
+mongoose.connect(() => {
+  app.listen(port, () => {
+    console.log(`App listening on port ${port}!`);
+  });
 });
 

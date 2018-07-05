@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import passport from 'passport';
 
 
-import { productsController, users, authController, citiesController } from '../controllers';
+import { productsController, userContoller, authController, citiesController } from '../controllers';
 import { queryParser, cookieParser, verify } from '../middlewares';
 import { initLocalPassport, initFacebookPassport, initTwitterPassport, initGooglePassport } from '../passports';
 
@@ -39,8 +39,16 @@ router.get('/auth/google/callback', passport.authenticate('google'), authControl
 router.post('/api/products', productsController.productsPost);
 router.get('/api/products', productsController.productsGet);
 router.get('/api/products/:id', productsController.id);
+router.delete('/api/products/:id', productsController.productsDelete);
 router.get('/api/products/:id/reviews', productsController.reviews);
-router.get('/api/users', users);
+
+router.get('/api/users', userContoller.getUsers);
+router.delete('/api/users/:id', userContoller.deleteUser);
+
+router.get('/api/cities', citiesController.getCities);
+router.post('/api/cities', citiesController.postCities);
+router.put('/api/cities/:id', citiesController.putCity);
+router.delete('/api/cities/:id', citiesController.removeCity);
 router.get('/api/city', citiesController.getRandomCity);
 
 
